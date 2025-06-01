@@ -192,3 +192,5 @@ export const dummyPosts: Post[] = [
     replies: [],
   },
 ];
+
+export const dummyData = [...dummyUsers, ...dummyPosts];
