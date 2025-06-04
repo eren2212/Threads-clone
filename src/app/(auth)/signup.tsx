@@ -9,6 +9,7 @@ import {
 import { Link } from "expo-router";
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
+import Toast from "react-native-toast-message";
 
 export default function SignUpScreen() {
   const [email, setEmail] = useState("");
@@ -17,7 +18,7 @@ export default function SignUpScreen() {
 
   const handleSignUp = async () => {
     if (!email || !password) {
-      Alert.alert("Please enter an email and password");
+      Alert.alert("Lütfen email ve şifrenizi giriniz");
       return;
     }
 
@@ -29,10 +30,19 @@ export default function SignUpScreen() {
         error,
       } = await supabase.auth.signUp({ email, password });
 
-      if (error) Alert.alert(error.message);
-
-      if (!session)
-        Alert.alert("Please check your inbox for email verification!");
+      if (error) {
+        Alert.alert(error.message);
+        return;
+      } else {
+        Toast.show({
+          text1: "Hesap oluşturuldu!",
+          text2: "Lütfen e-postanıza gelen doğrulama linkini kontrol ediniz.",
+          type: "success",
+          position: "bottom",
+          visibilityTime: 3000,
+          autoHide: true,
+        });
+      }
     } catch (error) {
       console.error("Login error:", error);
       // TODO: Add proper error handling
