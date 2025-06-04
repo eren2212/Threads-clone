@@ -10,9 +10,14 @@ export default function HomeScreen() {
       data={dummyPosts}
       renderItem={({ item }) => <PostListItem post={item} />}
       ListHeaderComponent={() => (
-        <Link href="/new" className="text-white">
-          New Post
-        </Link>
+        <View className="flex-row justify-between items-center">
+          <Link href="/new" className="text-white">
+            New Post
+          </Link>
+          <Link href="/login" className="text-white">
+            Login
+          </Link>
+        </View>
       )}
     />
   );
