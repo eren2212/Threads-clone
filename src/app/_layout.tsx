@@ -3,6 +3,9 @@ import { Slot } from "expo-router";
 import { ThemeProvider, DarkTheme } from "@react-navigation/native";
 import Toast from "react-native-toast-message";
 import { AuthProvider } from "@/providers/AuthProvider";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 const MyTheme = {
   ...DarkTheme,
@@ -15,10 +18,12 @@ const MyTheme = {
 export default function RootLayout() {
   return (
     <ThemeProvider value={MyTheme}>
-      <AuthProvider>
-        <Slot />
-        <Toast />
-      </AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <Slot />
+          <Toast />
+        </AuthProvider>
+      </QueryClientProvider>
     </ThemeProvider>
   );
 }
