@@ -12,34 +12,51 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+const createPost = async (content: string, user_id: string) => {
+  const { data } = await supabase
+    .from("posts")
+    .insert({
+      content,
+      user_id,
+    })
+    .select("*")
+    .throwOnError();
+
+  return data;
+};
 
 export default function NewScreen() {
   const [text, setText] = useState("");
   const { user } = useAuth();
+  const queryClient = useQueryClient();
 
-  const onSubmit = async () => {
-    if (!text || !user) return;
-
-    const { data, error } = await supabase.from("posts").insert({
-      content: text,
-      user_id: user.id,
-    });
-
-    if (error) {
-      console.log(error);
-    } else {
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: () => createPost(text, user!.id),
+    onSuccess: (data) => {
       Toast.show({
         text1: "Post oluşturuldu!",
         type: "success",
-        position: "bottom",
+        position: "top",
         visibilityTime: 3000,
         autoHide: true,
       });
-      router.push("/");
-    }
+      router.back();
+      setText("");
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    },
 
-    setText("");
-  };
+    onError: (error) => {
+      Toast.show({
+        text1: "Bir hata oluştu!",
+        type: "error",
+        position: "top",
+        visibilityTime: 3000,
+        autoHide: true,
+      });
+    },
+  });
 
   return (
     <SafeAreaView className="p-4 flex-1">
@@ -62,7 +79,8 @@ export default function NewScreen() {
 
         <View className="mt-auto">
           <Pressable
-            onPress={onSubmit}
+            onPress={() => mutate()}
+            disabled={isPending}
             className="bg-white rounded-full px-4 py-2 self-end"
           >
             <Text className="text-black font-bold">Paylaş</Text>

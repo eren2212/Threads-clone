@@ -38,7 +38,7 @@ export default function SignUpScreen() {
           text1: "Hesap oluşturuldu!",
           text2: "Lütfen e-postanıza gelen doğrulama linkini kontrol ediniz.",
           type: "success",
-          position: "bottom",
+          position: "top",
           visibilityTime: 3000,
           autoHide: true,
         });

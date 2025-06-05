@@ -36,7 +36,7 @@ export default function LoginScreen() {
         Toast.show({
           text1: "Giriş yapıldı!",
           type: "success",
-          position: "bottom",
+          position: "top",
           visibilityTime: 3000,
           autoHide: true,
         });
