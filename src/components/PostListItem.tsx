@@ -1,21 +1,26 @@
 import { Pressable, Text, View, Image } from "react-native";
-import { Post } from "@/types";
 import { Link } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { Tables } from "@/types/database.types";
 import dayjs from "dayjs";
 import "dayjs/locale/tr";
 
 dayjs.locale("tr");
 dayjs.extend(relativeTime);
-export default function PostListItem({ post }: { post: Post }) {
+
+type PostWithUser = Tables<"posts"> & {
+  user: Tables<"profiles">;
+};
+
+export default function PostListItem({ post }: { post: PostWithUser }) {
   return (
     <Link href={`/posts/${post.id}`} asChild>
       <Pressable>
         <View className="flex-row p-4 border-b border-gray-800/70">
           {/* Avatar */}
           <Image
-            source={{ uri: post.user.avatar_url }}
+            source={{ uri: post.user.avatar_url ?? undefined }}
             className="w-10 h-10 rounded-full mr-3"
           />
 
