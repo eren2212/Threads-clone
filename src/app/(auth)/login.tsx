@@ -30,7 +30,13 @@ export default function LoginScreen() {
         password,
       });
       if (error) {
-        Alert.alert(error.message);
+        Toast.show({
+          text1: error.message,
+          type: "error",
+          position: "top",
+          visibilityTime: 3000,
+          autoHide: true,
+        });
         return;
       } else {
         Toast.show({
