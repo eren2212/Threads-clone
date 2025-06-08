@@ -8,18 +8,26 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import { supabase } from "@/lib/supabase";
 import PostListItem from "@/components/PostListItem";
 import PostReplyInput from "@/components/PostReplyInput";
-import { getPostById } from "@/services/post";
+import { getPostById, getPostReplies } from "@/services/post";
 
 export default function PostDetails() {
   const { id } = useLocalSearchParams<{ id: string }>();
 
-  const { data, isLoading, error } = useQuery({
+  const {
+    data: post,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["post", id],
     queryFn: () => getPostById(id),
     staleTime: 1000 * 60 * 5,
+  });
+
+  const { data: replies } = useQuery({
+    queryKey: ["posts", id, "replies"],
+    queryFn: () => getPostReplies(id),
   });
 
   if (isLoading) {
@@ -30,8 +38,6 @@ export default function PostDetails() {
     return <Text className="text-red-500">{error.message}</Text>;
   }
 
-  console.log(JSON.stringify(data, null, 2));
-
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -40,9 +46,28 @@ export default function PostDetails() {
     >
       <View className="flex-1 bg-neutral-900">
         <FlatList
-          data={[]}
+          data={replies || []}
           renderItem={({ item }) => <PostListItem post={item} />}
-          ListHeaderComponent={<PostListItem post={data} />}
+          ListHeaderComponent={
+            <View>
+              <PostListItem post={post} />
+              <View className="px-4 py-2 bg-neutral-800/50 flex-row justify-between items-center">
+                <Text className="text-white font-semibold text-base mb-1">
+                  Yanıtlar
+                </Text>
+                <Text className="text-neutral-400 text-sm">
+                  {replies?.length || 0} yanıt
+                </Text>
+              </View>
+            </View>
+          }
+          ListEmptyComponent={
+            <View className="p-6 items-center">
+              <Text className="text-neutral-500 text-center">
+                Henüz yanıt yok. İlk yanıtı sen yaz..
+              </Text>
+            </View>
+          }
         />
         <PostReplyInput postId={id} />
       </View>

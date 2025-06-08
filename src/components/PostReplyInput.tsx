@@ -27,6 +27,7 @@ export default function PostReplyInput({ postId }: { postId: string }) {
         visibilityTime: 3000,
         autoHide: true,
       });
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
     onError: (error) => {
       Toast.show({
@@ -36,9 +37,6 @@ export default function PostReplyInput({ postId }: { postId: string }) {
         visibilityTime: 3000,
         autoHide: true,
       });
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["post", postId] });
     },
   });
 

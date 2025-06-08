@@ -1,25 +1,14 @@
-import { StatusBar } from "expo-status-bar";
-import {
-  ActivityIndicator,
-  FlatList,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { ActivityIndicator, FlatList, Text } from "react-native";
 import PostListItem from "@/components/PostListItem";
-import { Link } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
-import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useQuery } from "@tanstack/react-query";
 
 const fetchPost = async () => {
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from("posts")
     .select("*,user:profiles(*)")
+    .is("parent_id", null)
     .throwOnError();
-
   return data;
 };
 

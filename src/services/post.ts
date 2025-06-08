@@ -9,7 +9,15 @@ export const createPost = async (newPost: PostInput) => {
     .insert(newPost)
     .select("*")
     .throwOnError();
+  return data;
+};
 
+export const getPostReplies = async (id: string) => {
+  const { data } = await supabase
+    .from("posts")
+    .select("*, user:profiles(*)")
+    .eq("parent_id", id)
+    .throwOnError();
   return data;
 };
 
