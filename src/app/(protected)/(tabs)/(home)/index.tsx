@@ -12,7 +12,6 @@ import { Link } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
-import { Post } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 
 const fetchPost = async () => {
