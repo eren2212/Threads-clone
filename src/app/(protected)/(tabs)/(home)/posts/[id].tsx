@@ -20,7 +20,7 @@ export default function PostDetails() {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["post", id],
+    queryKey: ["posts", id],
     queryFn: () => getPostById(id),
     staleTime: 1000 * 60 * 5,
   });
@@ -54,9 +54,6 @@ export default function PostDetails() {
               <View className="px-4 py-2 bg-neutral-800/50 flex-row justify-between items-center">
                 <Text className="text-white font-semibold text-base mb-1">
                   Yanıtlar
-                </Text>
-                <Text className="text-neutral-400 text-sm">
-                  {replies?.length || 0} yanıt
                 </Text>
               </View>
             </View>
