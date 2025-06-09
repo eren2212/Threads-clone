@@ -5,6 +5,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { Tables } from "@/types/database.types";
 import dayjs from "dayjs";
 import "dayjs/locale/tr";
+import SupabaseImage from "./SupbaseImage";
 
 dayjs.locale("tr");
 dayjs.extend(relativeTime);
@@ -34,6 +35,20 @@ export default function PostDetails({ post }: { post: PostWithUser }) {
 
         {/* Post Content */}
         <Text className="text-white">{post.content}</Text>
+
+        {post.images && (
+          <View className="flex-row gap-2 mt-2">
+            {post.images.map((image) => (
+              <SupabaseImage
+                key={image}
+                bucket="media"
+                path={image}
+                className="w-full aspect-square rounded-lg"
+                transform={{ width: 500, height: 500 }}
+              />
+            ))}
+          </View>
+        )}
 
         {/* Interaction Buttons */}
         <View className="flex-row gap-4">

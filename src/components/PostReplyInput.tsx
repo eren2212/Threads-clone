@@ -1,4 +1,4 @@
-import { TextInput, View } from "react-native";
+import { Keyboard, TextInput, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -27,6 +27,7 @@ export default function PostReplyInput({ postId }: { postId: string }) {
         visibilityTime: 3000,
         autoHide: true,
       });
+      Keyboard.dismiss();
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
     onError: (error) => {
