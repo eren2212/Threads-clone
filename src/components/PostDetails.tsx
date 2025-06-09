@@ -22,7 +22,7 @@ export default function PostDetails({ post }: { post: PostWithUser }) {
         <View className="flex-1 flex-row items-center gap-3">
           <Image
             source={{ uri: post.user.avatar_url ?? undefined }}
-            className="w-10 h-10 rounded-full mr-3"
+            className="w-12 h-12 rounded-full mr-3"
           />
           <Text className="text-white font-bold mr-2">
             {post.user.username}

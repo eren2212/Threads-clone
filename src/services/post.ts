@@ -8,6 +8,7 @@ export const fetchPost = async () => {
     .from("posts")
     .select("*,user:profiles(*),replies:posts(count)")
     .is("parent_id", null)
+    .order("created_at", { ascending: false })
     .throwOnError();
   return data;
 };
