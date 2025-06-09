@@ -11,8 +11,9 @@ import {
 import PostListItem from "@/components/PostListItem";
 import PostReplyInput from "@/components/PostReplyInput";
 import { getPostById, getPostReplies } from "@/services/post";
+import PostDetails from "@/components/PostDetails";
 
-export default function PostDetails() {
+export default function PostDetailsScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
 
   const {
@@ -50,7 +51,7 @@ export default function PostDetails() {
           renderItem={({ item }) => <PostListItem post={item} />}
           ListHeaderComponent={
             <View>
-              <PostListItem post={post} />
+              <PostDetails post={post} />
               <View className="px-4 py-2 bg-neutral-800/50 flex-row justify-between items-center">
                 <Text className="text-white font-semibold text-base mb-1">
                   Yanıtlar
