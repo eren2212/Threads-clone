@@ -50,12 +50,14 @@ export default function ProfileHeader() {
         {profile?.bio}
       </Text>
 
-      <View className="flex-row  gap-4">
-        <Pressable className="flex-1  justify-center border-2 border-neutral-800 p-3 rounded-2xl">
-          <Text className="text-center text-neutral-200  ">
-            Profili Düzenle
-          </Text>
-        </Pressable>
+      <View className="flex-row  gap-2 items-center justify-center">
+        <Link href="/profile/edit" asChild>
+          <Pressable className="flex-1  justify-center border-2 border-neutral-800 p-3 rounded-2xl">
+            <Text className="text-center text-neutral-200  ">
+              Profili Düzenle
+            </Text>
+          </Pressable>
+        </Link>
 
         <Pressable className="flex-1  justify-center  border-2 border-neutral-800 p-3 rounded-2xl">
           <Text className="text-center text-neutral-200  ">Profili Paylaş</Text>
