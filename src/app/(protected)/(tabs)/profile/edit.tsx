@@ -101,10 +101,6 @@ export default function EditProfileScreen() {
               Kaydet
             </Text>
           </Pressable>
-
-          <Pressable onPress={() => router.back()}>
-            <Text className="text-white font-bold text-xl">İptal</Text>
-          </Pressable>
         </View>
       </KeyboardAvoidingView>
     </View>
