@@ -30,6 +30,17 @@ export const getPostReplies = async (id: string) => {
   return data;
 };
 
+export const getPostsByUserId = async (userId: string) => {
+  const { data } = await supabase
+    .from("posts")
+    .select("*,user:profiles(*),replies:posts(count)")
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false })
+    .throwOnError();
+
+  return data;
+};
+
 export const getPostById = async (id: string) => {
   const { data } = await supabase
     .from("posts")

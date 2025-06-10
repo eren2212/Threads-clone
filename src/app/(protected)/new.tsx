@@ -27,6 +27,10 @@ export default function NewScreen() {
 
   const { mutate, isPending, error } = useMutation({
     mutationFn: async () => {
+      if (!text.trim() && !image) {
+        throw new Error("Lütfen bir şeyler yazın veya bir görsel seçin");
+      }
+
       let imagePath = undefined;
       if (image) {
         imagePath = await uploadImage();

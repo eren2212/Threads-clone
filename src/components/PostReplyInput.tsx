@@ -55,9 +55,9 @@ export default function PostReplyInput({ postId }: { postId: string }) {
         <AntDesign
           name="pluscircleo"
           size={24}
-          disabled={isPending || text.length === 0}
+          disabled={isPending || !text.trim()}
           onPress={() => mutate()}
-          color={text.length === 0 ? "gray" : "gainsboro"}
+          color={!text.trim() ? "gray" : "gainsboro"}
         />
       </View>
     </View>
