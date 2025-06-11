@@ -35,6 +35,7 @@ export default function PostListItem({
             bucket="avatars"
             path={post.user.avatar_url || ""}
             className="w-12 h-12 rounded-full"
+            transform={{ width: 50, height: 50 }}
           />
 
           {!isLastInGroup && (
@@ -65,6 +66,7 @@ export default function PostListItem({
                   bucket="media"
                   path={image}
                   className="w-full aspect-square rounded-lg"
+                  transform={{ width: 500, height: 500 }}
                 />
               ))}
             </View>
