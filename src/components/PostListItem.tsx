@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Tables } from "@/types/database.types";
 import { Link } from "expo-router";
-import SupabaseImage from "@/components/SupbaseImage";
+import SupabaseImage from "@/components/SupabaseImage";
 
 dayjs.extend(relativeTime);
 
@@ -31,10 +31,9 @@ export default function PostListItem({
       >
         {/* User Avatar */}
         <View className="mr-3 items-center gap-2">
-          <Image
-            source={{
-              uri: post.user.avatar_url || undefined,
-            }}
+          <SupabaseImage
+            bucket="avatars"
+            path={post.user.avatar_url || ""}
             className="w-12 h-12 rounded-full"
           />
 
@@ -66,7 +65,6 @@ export default function PostListItem({
                   bucket="media"
                   path={image}
                   className="w-full aspect-square rounded-lg"
-                  transform={{ width: 500, height: 500 }}
                 />
               ))}
             </View>

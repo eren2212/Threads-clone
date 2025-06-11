@@ -5,7 +5,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { Tables } from "@/types/database.types";
 import dayjs from "dayjs";
 import "dayjs/locale/tr";
-import SupabaseImage from "./SupbaseImage";
+import SupabaseImage from "./SupabaseImage";
 
 dayjs.locale("tr");
 dayjs.extend(relativeTime);
@@ -21,10 +21,12 @@ export default function PostDetails({ post }: { post: PostWithUser }) {
       <Pressable className="p-4 border-b border-gray-800/70 gap-4">
         {/* User Info */}
         <View className="flex-1 flex-row items-center gap-3">
-          <Image
-            source={{ uri: post.user.avatar_url ?? undefined }}
+          <SupabaseImage
+            bucket="avatars"
+            path={post.user.avatar_url || ""}
             className="w-12 h-12 rounded-full mr-3"
           />
+
           <Text className="text-white font-bold mr-2">
             {post.user.username}
           </Text>
@@ -44,7 +46,6 @@ export default function PostDetails({ post }: { post: PostWithUser }) {
                 bucket="media"
                 path={image}
                 className="w-full aspect-square rounded-lg"
-                transform={{ width: 500, height: 500 }}
               />
             ))}
           </View>

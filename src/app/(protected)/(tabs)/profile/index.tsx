@@ -37,13 +37,14 @@ export default function ProfileScreen() {
             <Text className="text-white text-lg font-bold px-5 border-b border-neutral-800">
               Threads
             </Text>
+            {posts && posts.length === 0 && (
+              <Text className="text-white text-lg  px-5 justify-center items-center mt-10">
+                Bu kullanıcı henüz bir thread paylaşmamış.
+              </Text>
+            )}
           </View>
         }
       />
-
-      <Text onPress={() => supabase.auth.signOut()} className="text-white">
-        Sign Out
-      </Text>
     </View>
   );
 }
