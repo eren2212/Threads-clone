@@ -47,7 +47,7 @@ export default function PostDetails({ post }: { post: PostWithUser }) {
                 bucket="media"
                 path={image}
                 className="w-full aspect-square rounded-lg"
-                transform={{ width: 500, height: 500 }}
+                transform={{ width: 800, height: 800 }}
               />
             ))}
           </View>

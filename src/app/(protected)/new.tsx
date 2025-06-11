@@ -13,16 +13,17 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createPost } from "@/services/post";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import SupabaseImage from "@/components/SupabaseImage";
 
 export default function NewScreen() {
   const [text, setText] = useState("");
   const [image, setImage] = useState<ImagePicker.ImagePickerAsset | null>(null);
 
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   const queryClient = useQueryClient();
 
   const { mutate, isPending, error } = useMutation({
@@ -107,33 +108,46 @@ export default function NewScreen() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={Platform.OS === "ios" ? 140 : 0}
       >
-        <Text className="text-white text-2xl font-bold">username</Text>
-
-        <TextInput
-          value={text}
-          onChangeText={setText}
-          placeholder="Ne düşüyorsun?"
-          placeholderTextColor="gray"
-          className="text-white text-lg my-2"
-          multiline
-          numberOfLines={4}
-        />
-
-        {image && (
-          <Image
-            source={{ uri: image.uri }}
-            className="w-1/2 rounded-lg my-4"
-            style={{ aspectRatio: image.width / image.height }}
+        <View className="flex-row  gap-4 border-b  pb-4">
+          <SupabaseImage
+            bucket="avatars"
+            path={profile?.avatar_url || ""}
+            className="w-20 h-20 rounded-full"
+            transform={{ width: 300, height: 300 }}
           />
-        )}
 
-        <View className="flex-row items-center gap-2">
-          <Ionicons
-            onPress={pickImage}
-            name="images-outline"
-            size={24}
-            color={image ? "gray" : "gainsboro"}
-          />
+          <View className="flex-col items-start gap-2">
+            <Text className="text-white text-2xl font-bold">
+              {profile?.full_name}
+            </Text>
+
+            <TextInput
+              value={text}
+              onChangeText={setText}
+              placeholder="Ne düşüyorsun?"
+              placeholderTextColor="gray"
+              className="text-white text-lg my-2"
+              multiline
+              numberOfLines={4}
+            />
+
+            {image && (
+              <Image
+                source={{ uri: image.uri }}
+                className="w-1/2 rounded-lg my-4"
+                style={{ aspectRatio: image.width / image.height }}
+              />
+            )}
+
+            <View className="flex-row items-center gap-2">
+              <Ionicons
+                onPress={pickImage}
+                name="images-outline"
+                size={24}
+                color={image ? "gray" : "gainsboro"}
+              />
+            </View>
+          </View>
         </View>
 
         <View className="mt-auto">
