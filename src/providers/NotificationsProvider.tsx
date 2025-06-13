@@ -34,13 +34,13 @@ export default function NotificationsProvider({ children }: PropsWithChildren) {
       updateProfile(user!.id, data),
   });
 
-  //   useEffect(() => {
-  //     if (expoPushToken) {
-  //       updateMutation({
-  //         push_token: expoPushToken,
-  //       });
-  //     }
-  //   }, [expoPushToken]);
+  useEffect(() => {
+    if (expoPushToken) {
+      updateMutation({
+        push_token: expoPushToken,
+      });
+    }
+  }, [expoPushToken]);
 
   useEffect(() => {
     registerForPushNotificationsAsync().then(
