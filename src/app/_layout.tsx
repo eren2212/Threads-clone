@@ -4,6 +4,7 @@ import { ThemeProvider, DarkTheme } from "@react-navigation/native";
 import Toast from "react-native-toast-message";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import NotificationsProvider from "@/providers/NotificationsProvider";
 
 const queryClient = new QueryClient();
 
@@ -21,8 +22,10 @@ export default function RootLayout() {
     <ThemeProvider value={MyTheme}>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <Slot />
-          <Toast />
+          <NotificationsProvider>
+            <Slot />
+            <Toast />
+          </NotificationsProvider>
         </AuthProvider>
       </QueryClientProvider>
     </ThemeProvider>
